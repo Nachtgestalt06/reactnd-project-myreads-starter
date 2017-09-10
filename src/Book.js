@@ -1,11 +1,20 @@
 import React, { Component } from "react";
 
 class Book extends Component {
-  changeSelect = () => {
-    // Aqui va la llamada de la API que va a tomar como parametros el libro y el shelf para que cuando quieras mover el libro de una categoria a otra, se actualize ese valor del objeto y el libro se mueva al nuevo shelf
+
+  state = {
+    value: this.props.shelf
+  }
+ 
+  changeSelect = (event) => {
+    this.setState({
+      value: event.target.value
+    });
   };
+
   render() {
-    const { title, author, cover, updateBooks } = this.props;
+    const { title, author, cover, update} = this.props;
+    console.log(update);
     return (
       <div className="book">
         <div className="book-top">
@@ -18,7 +27,7 @@ class Book extends Component {
             }}
           />
           <div className="book-shelf-changer">
-            <select onChange={event => updateBooks(event.target.value)}>
+            <select value={this.state.value} onChange={this.changeSelect}>
               <option value="none" disabled>
                 Move to...
               </option>
@@ -31,7 +40,7 @@ class Book extends Component {
         </div>
         <div className="book-title">{`${title}`}</div>
         <div className="book-authors">{`${author}`}</div>
-        <button onClick={() => updateBooks}>Click</button>
+        <button onClick={() => update}>Click</button>
       </div>
     );
   }

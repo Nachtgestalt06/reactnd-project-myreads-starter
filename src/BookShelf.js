@@ -1,20 +1,15 @@
-import React, { Component, PropTypes } from "react";
+import React, { Component } from "react";
 import Book from "./Book";
 import { Link } from "react-router-dom";
 
 class BookShelf extends Component {
-  static propTypes = {
-    onUpdateBooks: PropTypes.func.isRequired
-  };
-
+  
   render() {
     const { books, onUpdateBooks } = this.props;
-    let currentlyReading = books.filter(
-      book => book.shelf === "currentlyReading"
-    );
-
+    let currentlyReading = books.filter(book => book.shelf === "currentlyReading");
     let wantToRead = books.filter(book => book.shelf === "wantToRead");
     let read = books.filter(book => book.shelf === "read");
+
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -23,7 +18,7 @@ class BookShelf extends Component {
         <div className="list-books-content">
           <div>
             <div className="bookshelf">
-              <h2 className="bookshelf-title" data-category="currentlyReading">
+              <h2 className="bookshelf-title">
                 Currently Reading
               </h2>
               <div className="bookshelf-books">
@@ -35,7 +30,7 @@ class BookShelf extends Component {
                         author={book.authors}
                         cover={book.imageLinks.thumbnail}
                         shelf={book.shelf}
-                        updateBooks={onUpdateBooks}
+                        update={this.onUpdateBooks}
                       />
                     </li>
                   ))}
@@ -52,6 +47,7 @@ class BookShelf extends Component {
                         title={book.title}
                         author={book.authors}
                         cover={book.imageLinks.thumbnail}
+                        shelf={book.shelf}
                       />
                     </li>
                   ))}
@@ -68,6 +64,7 @@ class BookShelf extends Component {
                         title={book.title}
                         author={book.authors}
                         cover={book.imageLinks.thumbnail}
+                        shelf={book.shelf}
                       />
                     </li>
                   ))}

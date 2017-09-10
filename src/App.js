@@ -10,7 +10,7 @@ class BooksApp extends React.Component {
   state = {
     books: [],
     searchResults: [],
-    shelf: ""
+    shelf: ''
   };
   componentDidMount() {
     this.fetchBooks();
@@ -39,8 +39,6 @@ class BooksApp extends React.Component {
           render={() => (
             <BookShelf
               books={this.state.books}
-              onUpdateBooks={this.updateBooks}
-              bookShelf={this.state.shelf}
             />
           )}
         />
