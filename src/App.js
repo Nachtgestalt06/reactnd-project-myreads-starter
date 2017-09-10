@@ -9,19 +9,20 @@ import BookShelf from "./BookShelf";
 class BooksApp extends React.Component {
   state = {
     books: [],
-    searchResults: []
+    searchResults: [],
+    shelf: ""
   };
   componentDidMount() {
     this.fetchBooks();
   }
   fetchBooks = () => {
     BooksAPI.getAll().then(books => {
-      this.setState({ books });
+      this.setState({ books: books });
     });
   };
   updateBooks = (book, shelf) => {
     BooksAPI.update(book, shelf).then(books => {
-      this.setState({ books: books });
+      this.setState({ books: books, shelf: shelf });
     });
   };
   searchBooks = query => {
@@ -35,15 +36,22 @@ class BooksApp extends React.Component {
         <Route
           exact
           path="/"
-          render={() => <BookShelf books={this.state.books} />}
+          render={() => (
+            <BookShelf
+              books={this.state.books}
+              onUpdateBooks={this.updateBooks}
+              bookShelf={this.state.shelf}
+            />
+          )}
         />
         <Route
           exact
           path="/search"
           render={() => (
             <SearchPage
-              search={this.searchBooks}
-              results={this.searchResults}
+              onSearch={this.searchBooks}
+              searchResults={this.state.searchResults}
+              onUpdateBooks={this.updateBooks}
             />
           )}
         />
