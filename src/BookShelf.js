@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 class BookShelf extends Component {
   
   render() {
-    const { books, onUpdateBooks } = this.props;
+    const { books, onUpdateBooks, filterBooks } = this.props;
     let currentlyReading = books.filter(book => book.shelf === "currentlyReading");
     let wantToRead = books.filter(book => book.shelf === "wantToRead");
     let read = books.filter(book => book.shelf === "read");
@@ -26,11 +26,8 @@ class BookShelf extends Component {
                   {currentlyReading.map(book => (
                     <li key={book.id}>
                       <Book
-                        title={book.title}
-                        author={book.authors}
-                        cover={book.imageLinks.thumbnail}
-                        shelf={book.shelf}
-                        update={this.onUpdateBooks}
+                        book={book}
+                        onUpdateBooks={onUpdateBooks}
                       />
                     </li>
                   ))}
@@ -44,10 +41,8 @@ class BookShelf extends Component {
                   {wantToRead.map(book => (
                     <li key={book.id}>
                       <Book
-                        title={book.title}
-                        author={book.authors}
-                        cover={book.imageLinks.thumbnail}
-                        shelf={book.shelf}
+                        book={book}
+                        onUpdateBooks={onUpdateBooks}
                       />
                     </li>
                   ))}
@@ -61,10 +56,8 @@ class BookShelf extends Component {
                   {read.map(book => (
                     <li key={book.id}>
                       <Book
-                        title={book.title}
-                        author={book.authors}
-                        cover={book.imageLinks.thumbnail}
-                        shelf={book.shelf}
+                        book={book}
+                        onUpdateBooks={onUpdateBooks}
                       />
                     </li>
                   ))}

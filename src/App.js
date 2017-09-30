@@ -10,7 +10,7 @@ class BooksApp extends React.Component {
   state = {
     books: [],
     searchResults: [],
-    shelf: ''
+    filterBooks: []
   };
   componentDidMount() {
     this.fetchBooks();
@@ -22,7 +22,7 @@ class BooksApp extends React.Component {
   };
   updateBooks = (book, shelf) => {
     BooksAPI.update(book, shelf).then(books => {
-      this.setState({ books: books, shelf: shelf });
+      this.setState({ filterBooks: books });
     });
   };
   searchBooks = query => {
@@ -39,6 +39,8 @@ class BooksApp extends React.Component {
           render={() => (
             <BookShelf
               books={this.state.books}
+              onUpdateBooks={this.updateBooks}
+              filterBooks={this.state.filterBooks}
             />
           )}
         />

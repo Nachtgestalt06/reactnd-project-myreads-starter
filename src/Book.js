@@ -3,18 +3,21 @@ import React, { Component } from "react";
 class Book extends Component {
 
   state = {
-    value: this.props.shelf
+    currentShelf: this.props.book.shelf
   }
  
   changeSelect = (event) => {
+    const { onUpdateBooks, book } = this.props;
+    
     this.setState({
-      value: event.target.value
+      currentShelf: event.target.value
     });
+    onUpdateBooks(book, event.target.value);
   };
 
   render() {
-    const { title, author, cover, update} = this.props;
-    console.log(update);
+    const { book } = this.props;
+    console.log(book);
     return (
       <div className="book">
         <div className="book-top">
@@ -23,11 +26,11 @@ class Book extends Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${cover})`
+              backgroundImage: `url(${book.imageLinks.smallThumbnail})`
             }}
           />
           <div className="book-shelf-changer">
-            <select value={this.state.value} onChange={this.changeSelect}>
+            <select value={this.state.currentShelf} onChange={this.changeSelect}>
               <option value="none" disabled>
                 Move to...
               </option>
@@ -38,9 +41,8 @@ class Book extends Component {
             </select>
           </div>
         </div>
-        <div className="book-title">{`${title}`}</div>
-        <div className="book-authors">{`${author}`}</div>
-        <button onClick={() => update}>Click</button>
+        <div className="book-title">{`${book.title}`}</div>
+        <div className="book-authors">{`${book.authors}`}</div>
       </div>
     );
   }

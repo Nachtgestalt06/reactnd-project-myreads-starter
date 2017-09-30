@@ -13,8 +13,7 @@ class SearchPage extends Component {
     query: ""
   };
   render() {
-    const { onSearch, searchResults } = this.props;
-    console.log(searchResults);
+    const { onSearch, searchResults, onUpdateBooks } = this.props;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -35,9 +34,8 @@ class SearchPage extends Component {
             {searchResults.map(book => (
               <li key={book.id}>
                 <Book
-                  title={book.title}
-                  author={book.authors}
-                  cover={book.imageLinks.thumbnail}
+                  book={book}
+                  onUpdateBooks={onUpdateBooks}
                 />
               </li>
             ))}
