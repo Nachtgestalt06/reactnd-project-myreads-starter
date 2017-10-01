@@ -8,7 +8,7 @@ class Book extends Component {
  
   changeSelect = (event) => {
     const { onUpdateBooks, book } = this.props;
-    
+  
     this.setState({
       currentShelf: event.target.value
     });
