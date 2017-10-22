@@ -9,8 +9,7 @@ import BookShelf from "./BookShelf";
 class BooksApp extends React.Component {
   state = {
     books: [],
-    searchResults: [],
-    filterBooks: []
+    searchResults: []
   };
   componentDidMount() {
     this.fetchBooks();
@@ -22,12 +21,23 @@ class BooksApp extends React.Component {
   };
   updateBooks = (book, shelf) => {
     BooksAPI.update(book, shelf).then(books => {
-      this.setState({ filterBooks: books });
+      book.shelf = shelf;
+      let updatedBooks = this.state.books.filter((b) => b.id !== book.id).concat(book);
+      this.setState({ books: updatedBooks });
     });
   };
   searchBooks = query => {
     BooksAPI.search(query).then(results => {
-      this.setState({ searchResults: results });
+      let searchResults = results.map((book) => {
+        let bookOnShelf = this.state.books.find((b) => b.id === book.id);
+        if (bookOnShelf) {
+          book.shelf = bookOnShelf.shelf;
+        } else {
+          book.shelf = 'none';
+        }
+        return book;
+      })
+      this.setState({ searchResults });
     });
   };
   render() {

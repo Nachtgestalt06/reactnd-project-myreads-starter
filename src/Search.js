@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from "react";
 import { Link } from "react-router-dom";
 import Book from "./Book";
+import { Debounce } from 'react-throttle';
 
 class SearchPage extends Component {
   static propTypes = {
@@ -14,7 +15,6 @@ class SearchPage extends Component {
   };
   render() {
     const { onSearch, searchResults, onUpdateBooks } = this.props;
-    console.log(searchResults);
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -23,11 +23,13 @@ class SearchPage extends Component {
           </Link>
 
           <div className="search-books-input-wrapper">
-            <input
-              type="text"
-              placeholder="Search by title or author"
-              onChange={event => onSearch(event.target.value)}
-            />
+            <Debounce time="400" handler="onChange">
+              <input
+                type="text"
+                placeholder="Search by title or author"
+                onChange={event => onSearch(event.target.value)}
+              />
+            </Debounce>
           </div>
         </div>
         <div className="search-books-results">
